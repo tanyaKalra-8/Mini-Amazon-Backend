@@ -33,7 +33,7 @@ public class SellerService {
         Seller seller = SellerConvertor.SellerRequestDtoToSeller(sellerRequestDto);
 
         sellerRepository.save(seller);
-        return "Welcome! Now you can sell on Mini-Amazon";
+        return "Welcome! Now you can sell on Mini-Amazon. Your ID is: " + seller.getId();
     }
 
     public List<SellerResponseDto> viewAllSellers() {

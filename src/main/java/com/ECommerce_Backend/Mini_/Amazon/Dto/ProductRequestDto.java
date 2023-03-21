@@ -17,5 +17,4 @@ public class ProductRequestDto {
     private Category category;
     private int sellerId;
 
-    private ProductStatus productStatus;
 }

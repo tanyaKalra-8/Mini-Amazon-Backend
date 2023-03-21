@@ -2,6 +2,7 @@ package com.ECommerce_Backend.Mini_.Amazon.Convertor;
 
 import com.ECommerce_Backend.Mini_.Amazon.Dto.ProductRequestDto;
 import com.ECommerce_Backend.Mini_.Amazon.Dto.ProductResponseDto;
+import com.ECommerce_Backend.Mini_.Amazon.Enum.ProductStatus;
 import com.ECommerce_Backend.Mini_.Amazon.Model.Product;
 import lombok.experimental.UtilityClass;
 
@@ -15,7 +16,7 @@ public class ProductConvertor {
                 .price(productRequestDto.getPrice())
                 .quantity(productRequestDto.getQuantity())
                 .productcategory(productRequestDto.getCategory())
-                .productStatus(productRequestDto.getProductStatus())
+                .productStatus(ProductStatus.AVAILABLE)
                 .build();
 
         return product;
