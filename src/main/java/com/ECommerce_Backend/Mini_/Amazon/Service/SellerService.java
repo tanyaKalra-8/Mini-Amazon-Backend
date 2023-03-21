@@ -1,5 +1,6 @@
 package com.ECommerce_Backend.Mini_.Amazon.Service;
 
+import com.ECommerce_Backend.Mini_.Amazon.Convertor.SellerConvertor;
 import com.ECommerce_Backend.Mini_.Amazon.Dto.SellerRequestDto;
 import com.ECommerce_Backend.Mini_.Amazon.Dto.SellerResponseDto;
 import com.ECommerce_Backend.Mini_.Amazon.Model.Seller;
@@ -16,16 +17,23 @@ public class SellerService {
     @Autowired
     SellerRepository sellerRepository;
 
-    public void addSeller(SellerRequestDto sellerRequestDto){
+    public String addSeller(SellerRequestDto sellerRequestDto){
 
         //seller object
-        Seller seller = new Seller();
-        seller.setName(sellerRequestDto.getName());
-        seller.setEmail(sellerRequestDto.getEmail());
-        seller.setMobNo(sellerRequestDto.getMobNo());
-        seller.setPanNo(sellerRequestDto.getPanNo());
+//        Seller seller = new Seller();
+//        seller.setName(sellerRequestDto.getName());
+//        seller.setEmail(sellerRequestDto.getEmail());
+//        seller.setMobNo(sellerRequestDto.getMobNo());
+//        seller.setPanNo(sellerRequestDto.getPanNo());
+
+        //Builder --> annotation - different way to create an object
+        //written in seller class
+        //professional way of building an object
+        //created convertor package so that code looks clean
+        Seller seller = SellerConvertor.SellerRequestDtoToSeller(sellerRequestDto);
 
         sellerRepository.save(seller);
+        return "Welcome! Now you can sell on Mini-Amazon";
     }
 
     public List<SellerResponseDto> viewAllSellers() {
@@ -34,13 +42,25 @@ public class SellerService {
         SellerResponseDto sellerResponseDto;
 
         for (Seller seller: sellers){
-            sellerResponseDto =  new SellerResponseDto();
-            sellerResponseDto.setName(seller.getName());
-            sellerResponseDto.setEmail(seller.getEmail());
-            sellerResponseDto.setMobNo(seller.getMobNo());
-            sellerResponseDto.setPanNo(seller.getPanNo());
+            sellerResponseDto =  SellerConvertor.SellerToSellerResponseDto(seller);
 
             sellerResponse.add(sellerResponseDto);
+        }
+        return sellerResponse;
+    }
+
+    public SellerResponseDto GetSellerByPanNo(String panNo){
+        Seller seller = sellerRepository.findBypanNo(panNo);
+
+        return SellerConvertor.SellerToSellerResponseDto(seller);
+    }
+
+    public List<SellerResponseDto> GetSellerByName(String name){
+        List<Seller> sellerList = sellerRepository.findByName(name);
+        List<SellerResponseDto> sellerResponse = new ArrayList<>();
+
+        for (Seller seller: sellerList){
+            sellerResponse.add(SellerConvertor.SellerToSellerResponseDto(seller));
         }
         return sellerResponse;
     }

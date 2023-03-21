@@ -4,10 +4,7 @@ import com.ECommerce_Backend.Mini_.Amazon.Dto.SellerRequestDto;
 import com.ECommerce_Backend.Mini_.Amazon.Dto.SellerResponseDto;
 import com.ECommerce_Backend.Mini_.Amazon.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,12 +15,23 @@ public class SellerController {
     @Autowired
     SellerService sellerService;
 
+    @PostMapping("/add")
     public String addSeller(@RequestBody SellerRequestDto sellerRequestDto){
-        sellerService.addSeller(sellerRequestDto);
-        return "Seller added successfully";
+        return sellerService.addSeller(sellerRequestDto);
     }
 
+    @GetMapping("/get")
     public List<SellerResponseDto> viewAllSellers(){
         return sellerService.viewAllSellers();
+    }
+
+    @GetMapping("/get_by_pan")
+    public SellerResponseDto GetSellerByPanNo(@RequestParam String panNo){
+        return sellerService.GetSellerByPanNo(panNo);
+    }
+
+    @GetMapping("/get_by_name")
+    public List<SellerResponseDto> GetSellerByName(@RequestParam String name){
+        return sellerService.GetSellerByName(name);
     }
 }

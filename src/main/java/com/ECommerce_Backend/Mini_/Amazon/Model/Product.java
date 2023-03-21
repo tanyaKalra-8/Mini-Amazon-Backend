@@ -1,7 +1,9 @@
 package com.ECommerce_Backend.Mini_.Amazon.Model;
 
 import com.ECommerce_Backend.Mini_.Amazon.Enum.Category;
+import com.ECommerce_Backend.Mini_.Amazon.Enum.ProductStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,17 +13,21 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String productName;
     private int price;
     private int quantity;
     @Enumerated(EnumType.STRING)
-    private Category category;
+    private Category productcategory;
+
+    @Enumerated(EnumType.STRING)
+    private ProductStatus productStatus;
 
     @ManyToOne
     @JoinColumn

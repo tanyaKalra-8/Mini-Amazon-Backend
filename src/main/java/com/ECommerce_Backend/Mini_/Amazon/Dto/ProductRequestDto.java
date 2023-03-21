@@ -1,6 +1,7 @@
 package com.ECommerce_Backend.Mini_.Amazon.Dto;
 
 import com.ECommerce_Backend.Mini_.Amazon.Enum.Category;
+import com.ECommerce_Backend.Mini_.Amazon.Enum.ProductStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,4 +16,6 @@ public class ProductRequestDto {
     private int quantity;
     private Category category;
     private int sellerId;
+
+    private ProductStatus productStatus;
 }

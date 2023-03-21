@@ -1,5 +1,6 @@
 package com.ECommerce_Backend.Mini_.Amazon.Service;
 
+import com.ECommerce_Backend.Mini_.Amazon.Convertor.ProductConvertor;
 import com.ECommerce_Backend.Mini_.Amazon.Dto.ProductRequestDto;
 import com.ECommerce_Backend.Mini_.Amazon.Dto.ProductResponseDto;
 import com.ECommerce_Backend.Mini_.Amazon.Enum.Category;
@@ -24,11 +25,14 @@ public class ProductService {
 
     public void addProduct(ProductRequestDto productRequestDto) {
         //create a product
-        Product product = new Product();
-        product.setName(productRequestDto.getName());
-        product.setPrice(productRequestDto.getPrice());
-        product.setQuantity(productRequestDto.getQuantity());
-        product.setCategory(productRequestDto.getCategory());
+//        Product product = new Product();
+//        product.setProductName(productRequestDto.getName());
+//        product.setPrice(productRequestDto.getPrice());
+//        product.setQuantity(productRequestDto.getQuantity());
+//        product.setProductcategory(productRequestDto.getCategory());
+//        product.setProductStatus(productRequestDto.getProductStatus());
+
+        Product product = ProductConvertor.ProductRequestDtoToProduct(productRequestDto);
 
         //finding the seller
         Seller seller = sellerRepository.findById(productRequestDto.getSellerId()).get();
@@ -39,17 +43,13 @@ public class ProductService {
     }
 
     public List<ProductResponseDto> viewAllProductByCategory(Category category) {
-        List<Product> products = productRepository.findByCategory(category);
+        List<Product> products = productRepository.findByProductcategory(category);
         List<ProductResponseDto> productResponse = new ArrayList<>();
         ProductResponseDto productResponseDto;
 
         for (Product product: products){
 
-            productResponseDto = new ProductResponseDto();
-            productResponseDto.setName(product.getName());
-            productResponseDto.setPrice(product.getPrice());
-            productResponseDto.setQuantity(product.getQuantity());
-            productResponseDto.setCategory(product.getCategory());
+            productResponseDto = ProductConvertor.ProductToProductResponseDto(product);
 
             productResponse.add(productResponseDto);
         }
