@@ -23,7 +23,7 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public void addProduct(ProductRequestDto productRequestDto) {
+    public ProductResponseDto addProduct(ProductRequestDto productRequestDto) {
         //create a product
 //        Product product = new Product();
 //        product.setProductName(productRequestDto.getName());
@@ -40,6 +40,8 @@ public class ProductService {
         product.setSeller(seller);
 
         sellerRepository.save(seller);
+
+        return ProductConvertor.ProductToProductResponseDto(product);
     }
 
     public List<ProductResponseDto> viewAllProductByCategory(Category category) {

@@ -17,9 +17,8 @@ public class ProductController {
     ProductService productService;
 
     @PostMapping("/add")
-    public String addProduct(@RequestBody ProductRequestDto productRequestDto){
-        productService.addProduct(productRequestDto);
-        return "Product added successfully";
+    public ProductResponseDto addProduct(@RequestBody ProductRequestDto productRequestDto){
+        return productService.addProduct(productRequestDto);
     }
 
     @GetMapping("/view_by_category")
