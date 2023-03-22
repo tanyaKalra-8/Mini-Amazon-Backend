@@ -8,27 +8,23 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class SellerConvertor {
 
-    public static Seller SellerRequestDtoToSeller(SellerRequestDto sellerRequestDto){
+    public static Seller sellerRequestDtoToSeller(SellerRequestDto sellerRequestDto){
 
-        Seller seller = Seller.builder()
+        return Seller.builder()
                 .name(sellerRequestDto.getName())
                 .email(sellerRequestDto.getEmail())
                 .mobNo(sellerRequestDto.getMobNo())
                 .panNo(sellerRequestDto.getPanNo())
                 .build();
-
-        return seller;
     }
 
-    public static SellerResponseDto SellerToSellerResponseDto(Seller seller){
+    public static SellerResponseDto sellerToSellerResponseDto(Seller seller){
 
-        SellerResponseDto sellerResponseDto = SellerResponseDto.builder()
+        return SellerResponseDto.builder()
                 .name(seller.getName())
                 .email(seller.getEmail())
                 .mobNo(seller.getMobNo())
                 .panNo(seller.getPanNo())
                 .build();
-
-        return  sellerResponseDto;
     }
 }

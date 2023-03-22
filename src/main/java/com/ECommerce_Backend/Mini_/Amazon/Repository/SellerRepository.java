@@ -11,5 +11,11 @@ public interface SellerRepository extends JpaRepository<Seller,Integer> {
 
     Seller findBypanNo(String panNo);
 
-    List<Seller> findByName(String name);
+    List<Seller> findAllByName(String name);
+
+    Seller findByEmail(String email);
+
+//    void deleteAllByName(String name);
+
+//    void deleteByEmail(String email);
 }

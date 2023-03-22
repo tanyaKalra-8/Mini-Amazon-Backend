@@ -4,6 +4,7 @@ import com.ECommerce_Backend.Mini_.Amazon.Convertor.ProductConvertor;
 import com.ECommerce_Backend.Mini_.Amazon.Dto.ProductRequestDto;
 import com.ECommerce_Backend.Mini_.Amazon.Dto.ProductResponseDto;
 import com.ECommerce_Backend.Mini_.Amazon.Enum.Category;
+import com.ECommerce_Backend.Mini_.Amazon.Exception.SellerNotPresentException;
 import com.ECommerce_Backend.Mini_.Amazon.Model.Product;
 import com.ECommerce_Backend.Mini_.Amazon.Model.Seller;
 import com.ECommerce_Backend.Mini_.Amazon.Repository.ProductRepository;
@@ -23,7 +24,7 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public ProductResponseDto addProduct(ProductRequestDto productRequestDto) {
+    public ProductResponseDto addProduct(ProductRequestDto productRequestDto) throws SellerNotPresentException{
         //create a product
 //        Product product = new Product();
 //        product.setProductName(productRequestDto.getName());
@@ -32,26 +33,33 @@ public class ProductService {
 //        product.setProductcategory(productRequestDto.getCategory());
 //        product.setProductStatus(productRequestDto.getProductStatus());
 
-        Product product = ProductConvertor.ProductRequestDtoToProduct(productRequestDto);
+        Seller seller;
+        try{
+            seller = sellerRepository.findById(productRequestDto.getSellerId()).get();
+        }
+        catch (Exception e){
+            throw new SellerNotPresentException("Invalid Seller Id");
+        }
 
-        //finding the seller
-        Seller seller = sellerRepository.findById(productRequestDto.getSellerId()).get();
-        seller.getProducts().add(product);
+        Product product = ProductConvertor.productRequestDtoToProduct(productRequestDto);
         product.setSeller(seller);
 
+        seller.getProducts().add(product);
+
+        //saving the parent class--> child will be saved automatically
         sellerRepository.save(seller);
 
-        return ProductConvertor.ProductToProductResponseDto(product);
+        return ProductConvertor.productToProductResponseDto(product);
     }
 
     public List<ProductResponseDto> viewAllProductByCategory(Category category) {
-        List<Product> products = productRepository.findByProductcategory(category);
+        List<Product> products = productRepository.findAllByProductcategory(category);
         List<ProductResponseDto> productResponse = new ArrayList<>();
         ProductResponseDto productResponseDto;
 
         for (Product product: products){
 
-            productResponseDto = ProductConvertor.ProductToProductResponseDto(product);
+            productResponseDto = ProductConvertor.productToProductResponseDto(product);
 
             productResponse.add(productResponseDto);
         }

@@ -9,9 +9,9 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ProductConvertor {
 
-    public static Product ProductRequestDtoToProduct(ProductRequestDto productRequestDto){
+    public static Product productRequestDtoToProduct(ProductRequestDto productRequestDto){
 
-        Product product = Product.builder()
+        return Product.builder()
                 .productName(productRequestDto.getName())
                 .price(productRequestDto.getPrice())
                 .quantity(productRequestDto.getQuantity())
@@ -19,19 +19,16 @@ public class ProductConvertor {
                 .productStatus(ProductStatus.AVAILABLE)
                 .build();
 
-        return product;
     }
 
-    public static ProductResponseDto ProductToProductResponseDto(Product product){
+    public static ProductResponseDto productToProductResponseDto(Product product){
 
-        ProductResponseDto productResponseDto = ProductResponseDto.builder()
+        return ProductResponseDto.builder()
                 .name(product.getProductName())
                 .price(product.getPrice())
                 .quantity(product.getQuantity())
                 .category(product.getProductcategory())
                 .productStatus(product.getProductStatus())
                 .build();
-
-        return productResponseDto;
     }
 }
