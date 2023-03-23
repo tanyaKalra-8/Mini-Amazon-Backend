@@ -1,6 +1,7 @@
 package com.ECommerce_Backend.Mini_.Amazon.Model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "customer")
 public class Customer {
 
@@ -31,7 +33,7 @@ public class Customer {
     List<Card> cards = new ArrayList<>();
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    Cart card;
+    Cart cart;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     List<Ordered> orders = new ArrayList<>();
