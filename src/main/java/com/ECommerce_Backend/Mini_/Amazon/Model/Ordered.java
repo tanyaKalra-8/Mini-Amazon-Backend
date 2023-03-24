@@ -1,6 +1,7 @@
 package com.ECommerce_Backend.Mini_.Amazon.Model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "orders")
 //named it ordered instead of order coz order is reserve keyword in sql,
 // and we won't be able to perform operations on it
